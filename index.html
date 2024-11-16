@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<style>
+    #nameText {
+        display: inline-block;
+        border-right: 2px solid red;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    a {
+        position: relative;
+        z-index: 10;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+
+    .input-animation {
+        position: relative;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .input-animation:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+    }
+
+    .input-animation::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: #ef4444;
+        transition: all 0.3s ease;
+    }
+
+    .input-animation:focus::after {
+        width: 100%;
+        left: 0;
+    }
+
+    /* Floating label animation */
+    .input-wrapper {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .floating-label {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9ca3af;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .input-animation:focus~.floating-label,
+    .input-animation:not(:placeholder-shown)~.floating-label {
+        top: -0.5rem;
+        left: 0.5rem;
+        font-size: 0.875rem;
+        color: #ef4444;
+        background-color: #1f2937;
+        padding: 0 0.25rem;
+    }
+
+    /* Textarea specific styles */
+    textarea~.floating-label {
+        top: 1rem;
+        transform: none;
+    }
+
+    textarea:focus~.floating-label,
+    textarea:not(:placeholder-shown)~.floating-label {
+        top: -0.5rem;
+    }
+</style>
+
+<body class="bg-gray-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-gray-900/95 backdrop-blur-sm z-50" data-aos="fade-down">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-red-500">Codify</h1>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-red-500" id="menuButton">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-red-500 transition-colors">Home</a>
+                    <a href="#services" class="hover:text-red-500 transition-colors">Services</a>
+                    <a href="#skills" class="hover:text-red-500 transition-colors">Skills</a>
+                    <a href="#My Certifications" class="hover:text-red-500 transition-colors">Certifications</a>
+                    <a href="#contact" class="hover:text-red-500 transition-colors">Contact</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div class="md:hidden hidden" id="mobileMenu">
+                <div class="flex flex-col space-y-4 mt-4">
+                    <a href="#home" class="hover:text-red-500 transition-colors">Home</a>
+                    <a href="#services" class="hover:text-red-500 transition-colors">Services</a>
+                    <a href="#skills" class="hover:text-red-500 transition-colors">Skills</a>
+                    <a href="#My Certifications" class="hover:text-red-500 transition-colors">Certifications</a>
+                    <a href="#contact" class="hover:text-red-500 transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden"
+        data-aos="fade-up">
+        <!-- Background Blur -->
+        <div class="absolute right-0 w-96 h-96 bg-red-600 rounded-full filter blur-3xl opacity-20"></div>
+
+        <!-- Konten Utama -->
+        <div class="max-w-7xl mx-auto px-4 py-20 text-center md:flex items-center justify-between">
+            <!-- Foto Saya dengan Border -->
+            <div
+                class="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden mb-8 md:mb-0 mx-auto border-4 border-gray-300 relative">
+                <img src="Foto.jpg" alt="Foto Saya" class="object-cover w-full h-full absolute inset-0">
+            </div>
+
+            <!-- Teks Saya -->
+            <div class="text-center md:text-left md:ml-12">
+                <div class="mb-6">
+                    <h1 class="text-5xl md:text-7xl font-bold">
+                        Hi, I'm
+                    </h1>
+                    <h1 class="text-5xl md:text-7xl font-bold">
+                        <span id="nameText" class="text-red-500"></span>
+                    </h1>
+                </div>
+                <p id="roleText" class="text-2xl md:text-3xl text-gray-400 mb-8">Front-End Web Developer</p>
+                <p id="descriptionText" class="text-lg text-gray-600 mb-0">
+                    I'm a passionate and dedicated front-end web developer.
+                </p>
+
+                <p class="text-lg text-gray-600 mb-0">
+                    I focus on creating visually appealing and user-friendly interfaces.
+                </p>
+
+                <!-- Social Media Links -->
+                <div class="flex justify-center gap-4 mt-2">
+                    <a href="https://wa.me/message/EF5FQ7VHRQ2JF1" target="_blank"
+                        class="text-gray-400 hover:text-red-500 transition-colors">
+                        <i class="fab fa-whatsapp fa-2x"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@fikhru05?_t=8rLadmMzK1x&_r=1" target="_blank"
+                        class="text-gray-400 hover:text-red-500 transition-colors">
+                        <i class="fab fa-tiktok fa-2x"></i>
+                    </a>
+                    <a href="https://www.instagram.com/fikru_05?igsh=MzNlNGNkZWQ4Mg==" target="_blank"
+                        class="text-gray-400 hover:text-red-500 transition-colors">
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </a>
+                    <a href="https://t.me/Fikhru_05" target="_blank"
+                        class="text-gray-400 hover:text-red-500 transition-colors">
+                        <i class="fab fa-telegram fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-gradient-to-b from-gray-800 to-gray-900" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white-500 mb-4">Services</h2>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="relative group bg-gray-900 p-8 rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl"
+                    data-aos="zoom-in" data-aos-delay="200">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="relative z-10">
+                        <!-- UI/UX Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-6 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                        <h3 class="text-xl font-bold mb-4 text-red-500 group-hover:text-red-400 transition-colors">
+                            UI/UX Design
+                        </h3>
+                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            Creating intuitive and beautiful user interfaces with focus on user experience and modern
+                            design principles.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="relative group bg-gray-900 p-8 rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl"
+                    data-aos="zoom-in" data-aos-delay="400">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="relative z-10">
+                        <!-- Frontend Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-6 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        <h3 class="text-xl font-bold mb-4 text-red-500 group-hover:text-red-400 transition-colors">
+                            Frontend Development
+                        </h3>
+                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            Building responsive websites using modern technologies like HTML, CSS, and JavaScript.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="relative group bg-gray-900 p-8 rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl"
+                    data-aos="zoom-in" data-aos-delay="600">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                    <div class="relative z-10">
+                        <!-- Web Dev Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-6 text-red-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                        <h3 class="text-xl font-bold mb-4 text-red-500 group-hover:text-red-400 transition-colors">
+                            Web Development
+                        </h3>
+                        <p class="text-gray-400 group-hover:text-gray-300 transition-colors">
+                            Full-stack web development with focus on scalable and maintainable solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 bg-gradient-to-b from-gray-900 to-gray-800" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-red-500 mb-4">My Skills</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    A collection of technologies and tools I've mastered throughout my journey
+                </p>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- HTML -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="100">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-red-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-red-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse3.mm.bing.net/th?id=OIP.hIxoX54lbhDpyek0PAzx5gHaHr&pid=Api&P=0&h=180"
+                                alt="HTML Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-red-500 font-semibold text-lg">HTML</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-red-500 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CSS -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="200">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse3.mm.bing.net/th?id=OIP.EbZr3om6AM5m3uJburEWRgAAAA&pid=Api&P=0&h=180"
+                                alt="CSS Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-blue-500 font-semibold text-lg">CSS</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JavaScript -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="300">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-yellow-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://logodownload.org/wp-content/uploads/2022/04/javascript-logo-0.png"
+                                alt="JavaScript Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-yellow-500 font-semibold text-lg">JavaScript</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MySQL -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="400">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-cyan-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse3.mm.bing.net/th?id=OIP.wsus-_9qxZ6aYYVI8lj5LwHaGB&pid=Api&P=0&h=180"
+                                alt="MySQL Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-cyan-500 font-semibold text-lg">MySQL</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-cyan-500 h-2 rounded-full" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tailwind -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="500">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-teal-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-teal-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse1.mm.bing.net/th?id=OIP.3Slw0SehxPBEnPmaoZ3i-wHaEc&pid=Api&P=0&h=180"
+                                alt="Tailwind Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-teal-500 font-semibold text-lg">Tailwind</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-teal-500 h-2 rounded-full" style="width: 50%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Java -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="600">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-orange-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-orange-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse4.mm.bing.net/th?id=OIP.qUsonnBsHnioyl78SFCZfQHaGa&pid=Api&P=0&h=180"
+                                alt="Java Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-orange-500 font-semibold text-lg">Java</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-orange-500 h-2 rounded-full" style="width: 10%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHP -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="700">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-purple-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse2.mm.bing.net/th?id=OIP.rY9lo5OYNN04SBpD-edn-gHaEH&pid=Api&P=0&h=180"
+                                alt="PHP Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-purple-500 font-semibold text-lg">PHP</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 5%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python -->
+                <div class="group relative" data-aos="flip-left" data-aos-delay="800">
+                    <div
+                        class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700 hover:border-blue-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-blue-500/20">
+                        <div class="flex items-center gap-4">
+                            <img src="https://tse3.mm.bing.net/th?id=OIP.fGp1jPCRDUNNTQiM0X3L6QHaGK&pid=Api&P=0&h=180"
+                                alt="Python Logo" class="w-8 h-8 object-contain">
+                            <div>
+                                <h3 class="text-blue-500 font-semibold text-lg">Python</h3>
+                                <div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 35%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-900 text-white" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4" data-aos="fade-up">My Projects</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Here are some of my featured projects that showcase my skills in web development and problem-solving
+                </p>
+            </div>
+
+            <!-- Project Filter -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="200">
+                <button class="px-6 py-2 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors">
+                    All
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-800 text-white hover:bg-red-500 transition-colors">
+                    Web Apps
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-800 text-white hover:bg-red-500 transition-colors">
+                    Mobile
+                </button>
+                <button class="px-6 py-2 rounded-full bg-gray-800 text-white hover:bg-red-500 transition-colors">
+                    UI/UX
+                </button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project Card 1 -->
+                <div class="group bg-gray-800 rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden">
+                        <img src="https://uptdpuskesmaslampia.id/assets/uploads/WhatsApp%20Image%202024-01-29%20at%2008.27.46.jpeg"
+                            alt="E-Commerce Platform"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="absolute bottom-4 left-4">
+                                <span class="bg-red-500 text-white px-4 py-1 rounded-full text-sm">Web
+                                    Puskesmas Lampia</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-red-500 transition-colors">Informasi
+                            Layanan</h3>
+                        <p class="text-gray-400 mb-4">
+                            Puskesmas Lampia menyediakan berbagai layanan kesehatan meliputi pemeriksaan kesehatan umum,
+                            rawat jalan, dan program kesehatan masyarakat.
+                        </p>
+                        <!-- Tech Stack -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">Laravel</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">MySQL</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">Tailwind CSS</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">Alpine.js</span>
+                        </div>
+                        <!-- Links -->
+                        <div class="flex gap-4">
+                            <a href="https://uptdpuskesmaslampia.id"
+                                class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="group bg-gray-800 rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <div class="relative overflow-hidden">
+                        <img src="/img/image.png" alt="Website Cafe"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="absolute bottom-4 left-4">
+                                <span class="bg-red-500 text-white px-4 py-1 rounded-full text-sm">Website Cafe</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-red-500 transition-colors">Kopi Hening
+                            Website</h3>
+                        <p class="text-gray-400 mb-4">
+                            A website showcasing the menu, location, and online orders for Kopi Hening Cafe.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">HTML</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">CSS</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">JavaScript</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://kopihening-web.vercel.app/"
+                                class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Project Card 3 -->
+                <div class="group bg-gray-800 rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                    <div class="relative overflow-hidden">
+                        <img src="/img/smetc.png" alt="SMETC Services"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="absolute bottom-4 left-4">
+                                <span class="bg-red-500 text-white px-4 py-1 rounded-full text-sm">Web App</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-red-500 transition-colors">SMETC Services
+                        </h3>
+                        <p class="text-gray-400 mb-4">
+                            Platform layanan untuk membantu pelaku UMKM mengelola modal usaha dengan fitur analisis
+                            finansial dan pelaporan keuangan.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">Astro</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">PocketBase</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">Tailwind CSS</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://smetc-web.netlify.app/services/capital/"
+                                class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Project Card 4 -->
+                <div class="group bg-gray-800 rounded-xl overflow-hidden" data-aos="fade-up" data-aos-delay="600">
+                    <div class="relative overflow-hidden">
+                        <img src="/img/team-bento.png" alt="Puskesmas Lampia Website"
+                            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
+                            <div class="absolute bottom-4 left-4">
+                                <span class="bg-red-500 text-white px-4 py-1 rounded-full text-sm">UI/UX</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-red-500 transition-colors">Team Bento
+                            Website</h3>
+                        <p class="text-gray-400 mb-4">
+                            A healthcare website for Puskesmas Lampia with information on services, news, and
+                            appointments.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">Astro</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">CSS</span>
+                            <span class="px-3 py-1 bg-gray-700 rounded-full text-sm">JavaScript</span>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://uptdpuskesmaslampia.id/"
+                                class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="#" class="flex items-center gap-2 text-white hover:text-red-500 transition-colors">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Section -->
+    <section id="My Certifications" class="py-20 bg-gray-900 text-white" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center">
+                My Certifications
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Certificate 1 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
+                    data-aos="flip-left" data-aos-delay="100">
+                    <div class="relative">
+                        <img src="/img/sertifikat Laravel.jpg" alt="Laravel & MySQL Certificate"
+                            class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white px-4 py-2 rounded-bl-xl">
+                            2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-red-500">Webinar: Membangun Website Portfolio</h3>
+                        <div class="text-gray-400 space-y-2">
+                            <p class="mb-4">Dalam Webinar Digital Batch 1 oleh LKP CodePro Training Center</p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-certificate text-yellow-500"></i>
+                                <span>LKP CodePro Training Center</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-calendar-alt text-blue-500"></i>
+                                <span>Sabtu, 26 Oktober 2024</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-user text-green-500"></i>
+                                <span>Peserta: Muh. Fikhru Maulana</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Certificate 2 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
+                    data-aos="flip-left" data-aos-delay="300">
+                    <div class="relative">
+                        <img src="/img/sertifikat-dcc.jpg" alt="Free-Class Certificate"
+                            class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white px-4 py-2 rounded-bl-xl">
+                            2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-red-500">Free-Class oleh Dipanegara Computer Club (DCC)
+                        </h3>
+                        <div class="text-gray-400 space-y-2">
+                            <p class="mb-4">Diselenggarakan secara offline di Kampus Universitas Dipa Makassar</p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-certificate text-yellow-500"></i>
+                                <span>Universitas DIPA Makassar</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-calendar-alt text-blue-500"></i>
+                                <span>30 September - 02 Oktober 2024</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-user text-green-500"></i>
+                                <span>Peserta: Muh. Fikhru Maulana</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Certificate 3 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
+                    data-aos="flip-left" data-aos-delay="300">
+                    <div class="relative">
+                        <img src="/img/sertifikat-dimensi.jpg" alt="Programming Fundamental Certificate"
+                            class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-500 text-white px-4 py-2 rounded-bl-xl">
+                            2023
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 text-red-500">Programming Fundamental</h3>
+                        <div class="text-gray-400 space-y-2">
+                            <p class="mb-4">Workshop oleh Dipanegara Management Study - DIMENSI</p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-certificate text-yellow-500"></i>
+                                <span>Online Zoom Meeting</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-calendar-alt text-blue-500"></i>
+                                <span>1 - 2 November 2023</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm">
+                                <i class="fas fa-user text-green-500"></i>
+                                <span>Peserta: Muh. Fikhru Maulana Basnur</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-800" data-aos="fade-up">
+        <div class="max-w-7xl mx-auto px-4" data-aos="flip-left" data-aos-delay="400">
+            <h2 class="text-4xl font-bold mb-12 text-center text-white">Contact Me</h2>
+            <div class="max-w-xl mx-auto">
+                <form action="http://localhost:3000/send-email" method="POST" class="bg-gray-900 p-8 rounded-lg">
+                    <div class="input-wrapper">
+                        <input type="text" id="name" name="name"
+                            class="w-full p-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-500 input-animation"
+                            placeholder=" " required>
+                        <label for="name" class="floating-label">Your Name</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email"
+                            class="w-full p-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-500 input-animation"
+                            placeholder=" " required>
+                        <label for="email" class="floating-label">Your Email</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea id="message" name="message" rows="4"
+                            class="w-full p-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-500 input-animation"
+                            placeholder=" " required></textarea>
+                        <label for="message" class="floating-label">Your Message</label>
+                    </div>
+                    <button type="submit"
+                        class="w-full p-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="bg-gray-900 text-white py-4 text-center">
+        <p class="text-sm">&copy; 2024 Codify All rights reserved.</p>
+    </footer>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize AOS (Animate On Scroll) library
+            AOS.init();
+
+            // JavaScript for typing effect
+            const nameText = document.getElementById('nameText');
+            const text = "Fikhru Maulana";
+            let i = 0;
+            let typingSpeed = 150;
+            let deletingSpeed = 75;
+            let loopDelay = 1000;
+            let isDeleting = false;
+
+            function type() {
+                if (!isDeleting) {
+                    if (i < text.length) {
+                        nameText.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, typingSpeed);
+                    } else {
+                        isDeleting = true;
+                        setTimeout(type, loopDelay);
+                    }
+                } else {
+                    if (i > 0) {
+                        nameText.innerHTML = text.substring(0, i - 1);
+                        i--;
+                        setTimeout(type, deletingSpeed);
+                    } else {
+                        isDeleting = false;
+                        setTimeout(type, loopDelay);
+                    }
+                }
+            }
+
+            type();
+
+            // Mobile Menu Toggle
+            const menuButton = document.getElementById("menuButton");
+            const mobileMenu = document.getElementById("mobileMenu");
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener("click", () => {
+                    mobileMenu.classList.toggle("hidden");
+                    mobileMenu.classList.toggle("visible");
+                });
+            }
+
+            // Form submission handling
+            const form = document.querySelector("form");
+            if (form) {
+                form.addEventListener("submit", async function (event) {
+                    event.preventDefault(); // Prevent page refresh on form submission
+
+                    // Get values from form fields
+                    const name = document.getElementById("name").value.trim();
+                    const email = document.getElementById("email").value.trim();
+                    const message = document.getElementById("message").value.trim();
+
+                    // Validate form fields
+                    if (!name || !email || !message) {
+                        alert("Harap isi semua kolom!");
+                        return;
+                    }
+
+                    try {
+                        // Send data to server using Fetch API
+                        const response = await fetch("http://localhost:3000/send-email", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ name, email, message }),
+                        });
+
+                        // Check server response
+                        if (response.ok) {
+                            alert("Pesan berhasil terkirim!");
+                            form.reset(); // Reset form after successful submission
+                        } else {
+                            const errorData = await response.json();
+                            alert(`Pesan gagal terkirim. ${errorData.message || "Coba lagi nanti."}`);
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                        alert("Terjadi kesalahan saat mengirim pesan. Periksa koneksi Anda.");
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Code injected by live-server -->
+    <script>
+        // <![CDATA[  <-- For SVG support
+        if ('WebSocket' in window) {
+            (function () {
+                function refreshCSS() {
+                    var sheets = [].slice.call(document.getElementsByTagName("link"));
+                    var head = document.getElementsByTagName("head")[0];
+                    for (var i = 0; i < sheets.length; ++i) {
+                        var elem = sheets[i];
+                        var parent = elem.parentElement || head;
+                        parent.removeChild(elem);
+                        var rel = elem.rel;
+                        if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                            var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                            elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                        }
+                        parent.appendChild(elem);
+                    }
+                }
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + window.location.pathname + '/ws';
+                var socket = new WebSocket(address);
+                socket.onmessage = function (msg) {
+                    if (msg.data == 'reload') window.location.reload();
+                    else if (msg.data == 'refreshcss') refreshCSS();
+                };
+                if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                    console.log('Live reload enabled.');
+                    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+                }
+            })();
+        }
+        else {
+            console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+        }
+    </script>
+</body>
+
+</html>
